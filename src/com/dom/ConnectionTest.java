@@ -57,7 +57,6 @@ public class ConnectionTest {
 
     private static Connection connect(String un, String pw, String cs) throws RuntimeException, Error {
         try {
-            logger.fine("Connecting with Dedicated Data Source");
             OracleDataSource ods = new OracleDataSource();
             ods.setUser(un);
             ods.setPassword(pw);
@@ -66,6 +65,15 @@ public class ConnectionTest {
             connectionProperties.setProperty("autoCommit", "false");
             connectionProperties.setProperty("oracle.jdbc.fanEnabled", "false");
             ods.setConnectionProperties(connectionProperties);
+
+            try (Statement s = ods.getConnection().createStatement()) {
+                boolean r = s.execute("select sysdate from dual");
+                try (ResultSet rs = s.getResultSet()) {
+                    if (rs.next())
+                        logger.fine(String.format("Connected to database and retrieved a row : %s", rs.getDate(1)));
+                }
+            }
+
             return ods.getConnection();
         } catch (SQLException e) {
             logger.log(FINE, "SQL Exception Thown in connect()", e);
@@ -75,7 +83,6 @@ public class ConnectionTest {
 
     private static Connection PDSconnect(String un, String pw, String cs) throws RuntimeException, Error {
         try {
-            logger.fine("Connecting with Pooled Data Source");
             PoolDataSource pds;
             pds = PoolDataSourceFactory.getPoolDataSource();
             pds.setConnectionFactoryClassName("oracle.jdbc.pool.OracleDataSource");
@@ -87,11 +94,13 @@ public class ConnectionTest {
             prop.setProperty("oracle.jdbc.fanEnabled", "false");
             pds.setConnectionProperties(prop);
 
-            Statement s = pds.getConnection().createStatement();
-            boolean r = s.execute("select 1 from dual");
-            ResultSet rs = s.getResultSet();
-            if (rs.next())
-                logger.fine("Connected to database and retrieved a row");
+            try (Statement s = pds.getConnection().createStatement()) {
+                boolean r = s.execute("select sysdate from dual");
+                try (ResultSet rs = s.getResultSet()) {
+                    if (rs.next())
+                        logger.fine(String.format("Connected to database and retrieved a row : %s", rs.getDate(1)));
+                }
+            }
 
             return pds.getConnection();
         } catch (SQLException e) {
@@ -189,7 +198,7 @@ public class ConnectionTest {
                     ConsoleColours.RED,
                     connectionTime,
                     ConsoleColours.RESET
-                    ));
+            ));
             logger.fine("Finished...");
         } catch (Exception e) {
             System.err.printf("%sUnable to connect with the connection string %s, See the following message : %s%s\n",

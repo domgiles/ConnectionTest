@@ -1,2 +1,21 @@
 # Project exclude paths
 /out/
+/ConnectionTest.iml
+/connectiontest.jar
+/debug.log
+/build.properties
+/lib/commons-cli.jar
+/lib/commons-lang3.jar
+/lib/commons-math3.jar
+/lib/ojdbc8.jar
+/lib/ons.jar
+/lib/oraclepki.jar
+/lib/orai18n.jar
+/lib/osdt_cert.jar
+/lib/osdt_core.jar
+/lib/simplefan.jar
+/lib/ucp.jar
+/lib/xdb.jar
+/lib/xmlparserv2.jar
+/.idea/
+/ivy/ivy.jar
