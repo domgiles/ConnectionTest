@@ -67,7 +67,7 @@ public class ConnectionTest {
             ods.setConnectionProperties(connectionProperties);
 
             try (Statement s = ods.getConnection().createStatement()) {
-                boolean r = s.execute("select sysdate from dual");
+                s.execute("select sysdate from dual");
                 try (ResultSet rs = s.getResultSet()) {
                     if (rs.next())
                         logger.fine(String.format("Connected to database and retrieved a row : %s", rs.getDate(1)));
@@ -95,7 +95,7 @@ public class ConnectionTest {
             pds.setConnectionProperties(prop);
 
             try (Statement s = pds.getConnection().createStatement()) {
-                boolean r = s.execute("select sysdate from dual");
+                s.execute("select sysdate from dual");
                 try (ResultSet rs = s.getResultSet()) {
                     if (rs.next())
                         logger.fine(String.format("Connected to database and retrieved a row : %s", rs.getDate(1)));
@@ -175,20 +175,20 @@ public class ConnectionTest {
             List<Object[]> connectResults = connectBenchmark(pclo);
             OptionalDouble avgConnectTime = connectResults.stream().mapToLong(r -> (Long) r[1]).average();
             long connectionTime = System.currentTimeMillis() - startMillis;
-            System.out.println(String.format("%sUsing Oracle Driver version %s%s%s, Built on %s%s",
+            System.out.printf("%sUsing Oracle Driver version %s%s%s, Built on %s%s%n",
                     ConsoleColours.BLUE,
                     ConsoleColours.BLUE_BOLD_BRIGHT,
                     OracleDriver.getDriverVersion(),
                     ConsoleColours.BLUE,
                     OracleDriver.getBuildDate(),
-                    ConsoleColours.RESET));
-            System.out.println(String.format("%sConnecting using a %s%s%s driver%s",
+                    ConsoleColours.RESET);
+            System.out.printf("%sConnecting using a %s%s%s driver%s%n",
                     ConsoleColours.BLUE,
                     ConsoleColours.BLUE_BOLD_BRIGHT,
                     pclo.get(CommandLineOptions.DRIVER_TYPE),
                     ConsoleColours.BLUE,
-                    ConsoleColours.RESET));
-            System.out.println(String.format("%sConnected %d threads, Average connect time = %s%.2fms%s, Total time to connect all threads = %s%dms%s",
+                    ConsoleColours.RESET);
+            System.out.printf("%sConnected %d threads, Average connect time = %s%.2fms%s, Total time to connect all threads = %s%dms%s%n",
                     ConsoleColours.CYAN,
 //                    (int)pclo.get(CommandLineOptions.THREAD_COUNT),
                     connectResults.size(),
@@ -198,7 +198,7 @@ public class ConnectionTest {
                     ConsoleColours.RED,
                     connectionTime,
                     ConsoleColours.RESET
-            ));
+            );
             logger.fine("Finished...");
         } catch (Exception e) {
             System.err.printf("%sUnable to connect with the connection string %s, See the following message : %s%s\n",
