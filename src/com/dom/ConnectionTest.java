@@ -233,8 +233,6 @@ public class ConnectionTest {
         Option option14 = new Option("tc", "thread count, defaults to 1");
         option14.setArgs(1);
         option14.setArgName("threadcount");
-        Option option15 = new Option("async", "run async transactions, defaults to false");
-        option15.setArgs(0);
         Option option25 = new Option("o", "output : valid values are stdout,csv");
         option25.setArgs(1);
         option25.setArgName("output");
@@ -248,7 +246,7 @@ public class ConnectionTest {
         Option option30 = new Option("debug", "turn on debugging. Written to standard out");
 
         options.addOption(option8).addOption(option9).addOption(option10).addOption(option30).
-                addOption(option14).addOption(option15).addOption(option25).addOption(option13).
+                addOption(option14).addOption(option25).addOption(option13).
                 addOption(option26).addOption(option27);
         CommandLineParser clp = new BasicParser();
         CommandLine cl;
