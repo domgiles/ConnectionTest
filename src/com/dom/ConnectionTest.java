@@ -1,6 +1,5 @@
 package com.dom;
 
-import jdk.nashorn.internal.runtime.ParserException;
 import oracle.jdbc.OracleDriver;
 import oracle.jdbc.pool.OracleDataSource;
 import oracle.security.pki.OracleWallet;
@@ -306,7 +305,7 @@ public class ConnectionTest {
                     DriverType dt = DriverType.valueOf(cl.getOptionValue("dt"));
                     parsedOptions.put(CommandLineOptions.DRIVER_TYPE, dt);
                 } catch (IllegalArgumentException e) {
-                    throw new ParserException("Driver Type must be \"oci\" or \"thin\"");
+                    throw new ParseException("Driver Type must be \"oci\" or \"thin\"");
                 }
             }
 
