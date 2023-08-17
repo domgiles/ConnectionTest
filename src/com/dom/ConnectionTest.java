@@ -124,7 +124,7 @@ public class ConnectionTest {
         return connection;
     }
 
-    private static List connectBenchmark(Map<CommandLineOptions, Object> pclo) throws Exception {
+    private static List<Object[]> connectBenchmark(Map<CommandLineOptions, Object> pclo) throws Exception {
         List<Object[]> connectResults;
         if (pclo.get(CommandLineOptions.CONNECTION_TYPE) == ConnectionType.ODS) {
             logger.fine("Started creating connections");
@@ -274,12 +274,6 @@ public class ConnectionTest {
                 parsedOptions.put(CommandLineOptions.CONNECT_STRING, cl.getOptionValue("cs"));
             }
             if (cl.hasOption("tc")) {
-                parsedOptions.put(CommandLineOptions.THREAD_COUNT, Integer.parseInt(cl.getOptionValue("tc")));
-            } else {
-                parsedOptions.put(CommandLineOptions.THREAD_COUNT, 1);
-            }
-
-            if (cl.hasOption("dt")) {
                 parsedOptions.put(CommandLineOptions.THREAD_COUNT, Integer.parseInt(cl.getOptionValue("tc")));
             } else {
                 parsedOptions.put(CommandLineOptions.THREAD_COUNT, 1);
