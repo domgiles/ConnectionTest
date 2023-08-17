@@ -367,7 +367,7 @@ public class ConnectionTest {
             java.security.Security.addProvider(new oracle.security.pki.OraclePKIProvider());
             return tmp;
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.fine(String.format("Unable to open and process the credentials file %s.", credentialsLocation));
             throw new RuntimeException(e);
         }
